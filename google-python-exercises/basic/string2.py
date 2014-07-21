@@ -7,6 +7,7 @@
 # http://code.google.com/edu/languages/google-python-class/
 
 # Additional basic string exercises
+import re
 
 # D. verbing
 # Given a string, if its length is at least 3,
@@ -17,6 +18,14 @@
 # Return the resulting string.
 def verbing(s):
   # +++your code here+++
+  len_s = len(s)
+  if len_s < 3:
+    return s
+  else:
+    if s[-3:] == 'ing':
+      return s + 'ly'
+    else:
+      return s + 'ing'
   return
 
 
@@ -30,7 +39,13 @@ def verbing(s):
 # This dinner is good!
 def not_bad(s):
   # +++your code here+++
-  return
+  not_idx = s.find('not')
+  bad_idx = s.find('bad')
+  if not_idx == -1 or bad_idx == -1:
+    return s
+  elif not_idx < bad_idx:
+    return re.sub(r'not.*bad', 'good', s)
+  return s
 
 
 # F. front_back
@@ -42,7 +57,9 @@ def not_bad(s):
 #  a-front + b-front + a-back + b-back
 def front_back(a, b):
   # +++your code here+++
-  return
+  a_front = (len(a)+1) / 2
+  b_front = (len(b)+1) / 2
+  return a[0:a_front] + b[0:b_front] + a[a_front:] + b[b_front:]
 
 
 # Simple provided test() function used in main() to print
