@@ -47,68 +47,55 @@ import operator
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 def print_words(filename):
-	f = open(filename, 'rU')
-	dict = {}
-	for line in f:
-		strlist = str.split(line)
-		for item in strlist:
-			l_item = item.lower()
-			if l_item in dict:
-				dict[l_item] += 1
-			else:
-				dict[l_item] = 1
+    f = open(filename, 'rU')
+    dict = {}
+    for line in f:
+        strlist = str.split(line)
+        for item in strlist:
+            l_item = item.lower()
+            if l_item in dict:
+                dict[l_item] += 1
+            else:
+                dict[l_item] = 1
 
-	for key in sorted(dict.keys()):
-		print key, dict[key]
+        for key in sorted(dict.keys()):
+            print key, dict[key]
+
 
 ###
 def print_top(filename):
-	f = open(filename, 'rU')
-	dict = {}
-	for line in f:
-		strlist = str.split(line)
-		for item in strlist:
-			l_item = item.lower()
-			if l_item in dict:
-				dict[l_item] += 1
-			else:
-				dict[l_item] = 1
+    f = open(filename, 'rU')
+    dict = {}
+    for line in f:
+        strlist = str.split(line)
+        for item in strlist:
+            l_item = item.lower()
+            if l_item in dict:
+                dict[l_item] += 1
+            else:
+                dict[l_item] = 1
 
-	sorted_dict = sorted(dict.items(), key=operator.itemgetter(1), reverse=True)
-	print sorted_dict[1:20]
+    sorted_dict = sorted(dict.items(), key=operator.itemgetter(1), reverse=True)
+    print sorted_dict[1:20]
 
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 def main():
-<<<<<<< HEAD
-	if len(sys.argv) != 3:
-		print 'usage: ./wordcount.py {--count | --topcount} file'
-	option = sys.argv[1]
-	filename = sys.argv[2]
-	if option == '--count':
-		print_words(filename)
-	elif option == '--topcount':
-		print_top(filename)
-	else:
-		print 'unknown option: ' + option
-	sys.exit(1)
-=======
-    
-  if len(sys.argv) != 3:
-    print 'usage: ./wordcount.py {--count | --topcount} file'
-    sys.exit(1)
+    if len(sys.argv) != 3:
+        print 'usage: ./wordcount.py {--count | --topcount} file'
+        sys.exit(1)
 
-  option = sys.argv[1]
-  filename = sys.argv[2]
-  if option == '--count':
-    print_words(filename)
-  elif option == '--topcount':
-    print_top(filename)
-  else:
-    print 'unknown option: ' + option
-    sys.exit(1)
->>>>>>> fc744a8a25fcfb008982eeb8bbe7e15877facfe5
+    option = sys.argv[1]
+    filename = sys.argv[2]
+    if option == '--count':
+        print_words(filename)
+    elif option == '--topcount':
+        print_top(filename)
+    else:
+        print 'unknown option: ' + option
+        sys.exit(1)
+
 
 if __name__ == '__main__':
-	main()
+    main()
