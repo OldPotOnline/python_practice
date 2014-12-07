@@ -34,35 +34,73 @@ Suggested milestones for incremental development:
  -Fix main() to use the extract_names list
 """
 
+import re
+
 def extract_names(filename):
-  """
-  Given a file name for baby.html, returns a list starting with the year string
-  followed by the name-rank strings in alphabetical order.
-  ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
-  """
-  # +++your code here+++
-  return
+    """
+    Given a file name for baby.html, returns a list starting with the year string
+    followed by the name-rank strings in alphabetical order.
+    ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
+    """
+    # +++your code here+++
+
+
+    with open(filename, 'r') as content_file:
+        content = content_file.read()
+
+    match_year = re.search(r'Popularity\sin\s(\d\d\d\d)', content)
+    if match_year:
+        year = match_year.group(1)
+    else:
+        print('ERROR: did not find year.')
+        return
+
+    match_all_names = re.findall(r'<td>(\d+)</td><td>(\w+)</td>\<td>(\w+)</td>', content)
+
+    name_dict = {}
+    for names in match_all_names:
+        male_name = names[1]
+        female_name = names[2]
+        name_dict[male_name] = names[0] #name
+        name_dict[female_name] = names[0]
+
+    text = ''
+    name_sorted = sorted(name_dict.keys())
+    for name in name_sorted:
+        text += '{0} {1}'.format(name, name_dict[name]) + '\n'
+
+    return text
 
 
 def main():
-  # This command-line parsing code is provided.
-  # Make a list of command line arguments, omitting the [0] element
-  # which is the script itself.
-  args = sys.argv[1:]
+    # This command-line parsing code is provided.
+    # Make a list of command line arguments, omitting the [0] element
+    # which is the script itself.
+    args = sys.argv[1:]
 
-  if not args:
-    print 'usage: [--summaryfile] file [file ...]'
-    sys.exit(1)
+    if not args:
+        print 'usage: [--summaryfile] file [file ...]'
+        sys.exit(1)
 
-  # Notice the summary flag and remove it from args if it is present.
-  summary = False
-  if args[0] == '--summaryfile':
-    summary = True
-    del args[0]
+    # Notice the summary flag and remove it from args if it is present.
+    summary = False
+    if args[0] == '--summaryfile':
+        summary = True
+        del args[0]
+    # +++your code here+++
+    # For each filename, get the names, then either print the text output
+    # or write it to a summary file
+    for arg in args:
+        result = extract_names(arg)
+        if summary:
+            input_fileName = arg.split('.html')
+            result_fileName = input_fileName[0] + '.summary'
+            output_file = open(result_fileName, 'w+')
+            output_file.write(result)
+            print('result is saved into ' + result_fileName)
+        else:
+            print(result)
 
-  # +++your code here+++
-  # For each filename, get the names, then either print the text output
-  # or write it to a summary file
-  
+
 if __name__ == '__main__':
-  main()
+    main()
